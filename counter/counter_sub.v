@@ -1,24 +1,4 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 11/11/2014 06:34:00 PM
-// Design Name: 
-// Module Name: counter_sub
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
 
 module counter_sub(
     input reset,
@@ -29,13 +9,15 @@ module counter_sub(
     input clear_overflow
     );
     
-    // Usual counter
-    always @(posedge clk_in)
+    // Usual counter with async reset
+    always @(posedge clk_in or negedge reset)
         if (enable && clk_in) begin
+            // Overflow interrupt
             if (count == 32'hFFFFFFFF) begin
                 overflow = 1'b1;
                 count = 32'h0;
             end else begin
+                //otherwise increment
                 count = count + 1;  
             end
         end else if (clear_overflow) begin

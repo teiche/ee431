@@ -1,24 +1,4 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 11/12/2014 06:28:00 PM
-// Design Name: 
-// Module Name: compare_sub
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
 
 module compare_sub(
     input reset,
@@ -32,7 +12,8 @@ module compare_sub(
     
     // Usual counter
     always @(posedge clk_in)
-            if (enable && (value[31:0] == counter[31:0])) begin
+            // If the clock goes off and our value equals the counter, match interrupt!
+            if (clk_in && enable && (value[31:0] == counter[31:0])) begin
                match <= 1'b1;
             end else if (clear || !reset) begin
                match <= 1'b0;
